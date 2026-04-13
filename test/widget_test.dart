@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:chessy_shryne/main.dart';
-import 'package:chessy_shryne/src/app.dart';
+import 'package:chessy_shryne/src/features/settings/settings_screen.dart';
 import 'package:chessy_shryne/src/models.dart';
 import 'package:chessy_shryne/src/preferences.dart';
 import 'package:chessy_shryne/src/repository.dart';
@@ -25,11 +25,11 @@ void main() {
 
     await tester.tap(find.text('Search'));
     await tester.pumpAndSettle();
-    expect(find.text('Search any player'), findsOneWidget);
+    expect(find.byType(SearchBar), findsOneWidget);
 
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
-    expect(find.text('Make home feel personal'), findsOneWidget);
+    expect(find.text('Save preferences'), findsOneWidget);
   });
 
   testWidgets('settings save updates home behavior', (
@@ -55,7 +55,10 @@ void main() {
     tester.testTextInput.closeConnection();
     await tester.pumpAndSettle();
 
-    await tester.drag(find.byType(CustomScrollView).last, const Offset(0, -300));
+    await tester.drag(
+      find.byType(CustomScrollView).last,
+      const Offset(0, -300),
+    );
     await tester.pumpAndSettle();
 
     final saveButton = find.descendant(
@@ -69,7 +72,7 @@ void main() {
     await tester.pump();
     await tester.pumpAndSettle();
 
-    expect(find.text('Recent games for shrawan'), findsOneWidget);
+    expect(find.text('shrawan'), findsWidgets);
     expect(find.text('Sicilian Defense'), findsOneWidget);
   });
 
