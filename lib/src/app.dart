@@ -1,4 +1,5 @@
 import 'package:chessy_shryne/src/app/app_shell.dart';
+import 'package:chessy_shryne/src/features/analysis/game_analysis_service.dart';
 import 'package:chessy_shryne/src/models.dart';
 import 'package:chessy_shryne/src/preferences.dart';
 import 'package:chessy_shryne/src/repository.dart';
@@ -10,10 +11,12 @@ class ChessyShryneApp extends StatefulWidget {
     super.key,
     required this.repository,
     required this.preferencesStore,
+    required this.analysisService,
   });
 
   final GamesRepository repository;
   final PreferencesStore preferencesStore;
+  final GameAnalysisService analysisService;
 
   @override
   State<ChessyShryneApp> createState() => _ChessyShryneAppState();
@@ -46,6 +49,7 @@ class _ChessyShryneAppState extends State<ChessyShryneApp> {
           return AppShell(
             repository: widget.repository,
             preferencesStore: widget.preferencesStore,
+            analysisService: widget.analysisService,
             initialPreferences: snapshot.data!,
           );
         },

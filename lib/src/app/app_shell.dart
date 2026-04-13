@@ -1,4 +1,5 @@
 import 'package:chessy_shryne/src/features/analysis/analysis_screen.dart';
+import 'package:chessy_shryne/src/features/analysis/game_analysis_service.dart';
 import 'package:chessy_shryne/src/features/home/home_screen.dart';
 import 'package:chessy_shryne/src/features/search/search_screen.dart';
 import 'package:chessy_shryne/src/features/settings/settings_screen.dart';
@@ -12,11 +13,13 @@ class AppShell extends StatefulWidget {
     super.key,
     required this.repository,
     required this.preferencesStore,
+    required this.analysisService,
     required this.initialPreferences,
   });
 
   final GamesRepository repository;
   final PreferencesStore preferencesStore;
+  final GameAnalysisService analysisService;
   final UserPreferences initialPreferences;
 
   @override
@@ -45,9 +48,15 @@ class _AppShellState extends State<AppShell> {
   }
 
   void _openAnalysis(RecentGameSummary game) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute<void>(builder: (_) => AnalysisScreen(game: game)));
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => AnalysisScreen(
+          game: game,
+          analysisService: widget.analysisService,
+          preset: _preferences.analysisPreset,
+        ),
+      ),
+    );
   }
 
   @override

@@ -18,6 +18,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late final TextEditingController _usernameController;
   late GameSource _selectedSource;
+  late AnalysisPreset _analysisPreset;
   late bool _autoRefresh;
   bool _isSaving = false;
 
@@ -28,6 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       text: widget.preferences.username ?? '',
     );
     _selectedSource = widget.preferences.preferredSource;
+    _analysisPreset = widget.preferences.analysisPreset;
     _autoRefresh = widget.preferences.autoRefreshHome;
   }
 
@@ -37,6 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (oldWidget.preferences != widget.preferences) {
       _usernameController.text = widget.preferences.username ?? '';
       _selectedSource = widget.preferences.preferredSource;
+      _analysisPreset = widget.preferences.analysisPreset;
       _autoRefresh = widget.preferences.autoRefreshHome;
     }
   }
@@ -58,6 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       clearUsername: trimmed.isEmpty,
       preferredSource: _selectedSource,
       autoRefreshHome: _autoRefresh,
+      analysisPreset: _analysisPreset,
     );
 
     await widget.onSave(preferences);
@@ -116,6 +120,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onSelectionChanged: (selection) {
                           setState(() {
                             _selectedSource = selection.first;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Analysis quality',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      SegmentedButton<AnalysisPreset>(
+                        segments: AnalysisPreset.values
+                            .map(
+                              (preset) => ButtonSegment<AnalysisPreset>(
+                                value: preset,
+                                label: Text(preset.label),
+                              ),
+                            )
+                            .toList(),
+                        selected: {_analysisPreset},
+                        onSelectionChanged: (selection) {
+                          setState(() {
+                            _analysisPreset = selection.first;
                           });
                         },
                       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chessy_shryne/main.dart';
+import 'package:chessy_shryne/src/features/analysis/game_analysis_service.dart';
 import 'package:chessy_shryne/src/features/settings/settings_screen.dart';
 import 'package:chessy_shryne/src/models.dart';
 import 'package:chessy_shryne/src/preferences.dart';
@@ -16,6 +17,7 @@ void main() {
       MyApp(
         repository: FakeGamesRepository(),
         preferencesStore: MemoryPreferencesStore(),
+        analysisService: GameAnalysisService(),
       ),
     );
     await tester.pumpAndSettle();
@@ -42,7 +44,11 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MyApp(repository: repository, preferencesStore: MemoryPreferencesStore()),
+      MyApp(
+        repository: repository,
+        preferencesStore: MemoryPreferencesStore(),
+        analysisService: GameAnalysisService(),
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -83,7 +89,11 @@ void main() {
     });
 
     await tester.pumpWidget(
-      MyApp(repository: repository, preferencesStore: MemoryPreferencesStore()),
+      MyApp(
+        repository: repository,
+        preferencesStore: MemoryPreferencesStore(),
+        analysisService: GameAnalysisService(),
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -114,7 +124,11 @@ void main() {
     });
 
     await tester.pumpWidget(
-      MyApp(repository: repository, preferencesStore: MemoryPreferencesStore()),
+      MyApp(
+        repository: repository,
+        preferencesStore: MemoryPreferencesStore(),
+        analysisService: GameAnalysisService(),
+      ),
     );
     await tester.pumpAndSettle();
 

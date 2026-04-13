@@ -11,6 +11,7 @@ class SharedPreferencesStore implements PreferencesStore {
   static const _usernameKey = 'username';
   static const _preferredSourceKey = 'preferred_source';
   static const _autoRefreshKey = 'auto_refresh_home';
+  static const _analysisPresetKey = 'analysis_preset';
 
   @override
   Future<UserPreferences> load() async {
@@ -20,11 +21,17 @@ class SharedPreferencesStore implements PreferencesStore {
       (value) => value.name == sourceName,
       orElse: () => GameSource.lichess,
     );
+    final presetName = prefs.getString(_analysisPresetKey);
+    final preset = AnalysisPreset.values.firstWhere(
+      (value) => value.name == presetName,
+      orElse: () => AnalysisPreset.medium,
+    );
 
     return UserPreferences(
       username: prefs.getString(_usernameKey),
       preferredSource: source,
       autoRefreshHome: prefs.getBool(_autoRefreshKey) ?? true,
+      analysisPreset: preset,
     );
   }
 
@@ -44,6 +51,7 @@ class SharedPreferencesStore implements PreferencesStore {
       preferences.preferredSource.name,
     );
     await prefs.setBool(_autoRefreshKey, preferences.autoRefreshHome);
+    await prefs.setString(_analysisPresetKey, preferences.analysisPreset.name);
   }
 }
 

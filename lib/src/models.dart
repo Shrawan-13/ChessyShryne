@@ -8,6 +8,16 @@ enum GameSource {
   final String shortLabel;
 }
 
+enum AnalysisPreset {
+  low('Low'),
+  medium('Medium'),
+  best('Best');
+
+  const AnalysisPreset(this.label);
+
+  final String label;
+}
+
 class PlayerSummary {
   const PlayerSummary({required this.name, this.rating, this.title});
 
@@ -90,22 +100,26 @@ class UserPreferences {
     this.username,
     this.preferredSource = GameSource.lichess,
     this.autoRefreshHome = true,
+    this.analysisPreset = AnalysisPreset.medium,
   });
 
   final String? username;
   final GameSource preferredSource;
   final bool autoRefreshHome;
+  final AnalysisPreset analysisPreset;
 
   UserPreferences copyWith({
     String? username,
     bool clearUsername = false,
     GameSource? preferredSource,
     bool? autoRefreshHome,
+    AnalysisPreset? analysisPreset,
   }) {
     return UserPreferences(
       username: clearUsername ? null : (username ?? this.username),
       preferredSource: preferredSource ?? this.preferredSource,
       autoRefreshHome: autoRefreshHome ?? this.autoRefreshHome,
+      analysisPreset: analysisPreset ?? this.analysisPreset,
     );
   }
 }
